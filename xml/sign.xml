@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<signatures_list>
+	<HTTP sign="HTTP/1.*" type="BROWSING" priority="0" num_pack="6"/>
+	<text sign="Content-Type: text" type="BROWSING" priority="0" num_pack="6"/>
+	<application sign="Content-Type: application" type="BROWSING" priority="0" num_pack="6"/>
+
+
+	<IMAGE sign="Content-Type: image" type="IMAGE" priority="1" num_pack="3"/>
+
+	<VIDEO sign="Content-Type: video" type="VIDEO" priority="2" num_pack="1"/>	
+        <VIDEO sign="[FC]WS[\x01-\x09]|FLV\x01\x05\x09" type="FLASH_PLAYER" priority="2" num_pack="1"/>
+
+        <audio sign="Content-Type: audio" type="AUDIO" priority="3" num_pack="1"/>
+        <audio sign="\x49\x44\x33\x03" type="AUDIO_MP3" priority="3" num_pack="1"/>
+
+        <SSL sign="^(.?.?\x16\x03.*\x16\x03|.?.?\x01\x03\x01?.*\x0b)" type="SSL_TSL_HTTPS" priority="4" num_pack="1"/>	
+        <SSL sign="^(.?.?\x16\x03.*\x16\x03|.?.?\x01\x03\x01?.*\x0b).*(thawte|equifax secure|rsa data security, inc|verisign, inc|gte cybertrust root|entrust\.net limited)" type="SSL_TSL_HTTPS" priority="4" num_pack="1"/>
+
+	
+        <TELNET sign="^\xff[\xfb-\xfe].\xff[\xfb-\xfe].\xff[\xfb-\xfe]" type="TELNET" priority="4" num_pack="1"/>	
+
+	<SSH sign="ˆssh-[12]\.[0-9]" type="SSH" priority="2" num_pack="1"/>
+
+	
+	<signature sign="^.F..-........./x02 ./x02 ..........@......." type="SKYPE" priority="2" num_pack="1"/>
+	<signature sign="^.F.-./x02 ./x02 .@." type="SKYPE" priority="2" num_pack="1"/>
+
+
+	<signature sign="^(\x13bittorrent protocol|azver\x01$|get /scrape\?info_hash)" type="BitTorrent" priority="4" num_pack="1"/>
+	<signature sign="^(\x13bittorrent protocol|get \?info_hash)" type="BitTorrent" priority="4" num_pack="1"/>
+
+
+	<FTP sign="^220[\x09-\x0d -~]*ftp" type="FTP" priority="5" num_pack="1"/>
+
+
+	<DNS sign="^.?.?.?.?[\x01\x02].?.?.?.?.?.?[\x01-?][a-z0-9][\x01-?a-z]*[\x02-\x06][a-z][a-z][fglmoprstuvz]?[aeop]?(um)?[\x01-\x10\x1c][\x01\x03\x04\xFF]" type="DNS" priority="5" num_pack="1" />
+	<DNS sign="^.?.?.?.?[\x01\x02].?.?.?.?.?.?[\x01-?][a-z0-9][\x01-?a-z]*[\x02-\x06][a-z][a-z][a-z]?[a-z]?[a-z]?[a-z]?[\x01-\x10][\x01\x03\x04\xFF]" type="DNS" priority="5" num_pack="1" />
+	<DNS sign="the [a-z][a-z][a-z]?[a-z]?[a-z]?[a-z]?" type="DNS" priority="5" num_pack="1" />
+	
+</signatures_list>

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<configuration>
+	<main_configurations />
+	<stat_config file_name="xml/stat.xml"  host_ip="192.168.100.239" state_period = "3"
+                 state_limit = "128" session_time_limit="5" none_limit="0.7"
+                 time_to_live = "1000"   />
+     
+	<sign_config  file_name="xml/sign.xml" session_lifetime="15" time_to_check="30"  host_ip="192.168.100.239" />
+</configuration>

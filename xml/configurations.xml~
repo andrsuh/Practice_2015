@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<configuration>
+	<stat_config file_name="stat.xml" mode="debug" pcap_file_name="1.pcap" />
+	<sign_config  file_name="xml/sign.xml" mode="debug" pcap_file_name="1.pcap" />
+</configuration>
