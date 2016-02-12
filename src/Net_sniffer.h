@@ -2,9 +2,10 @@
 #define NET_SNIFFER_H
 
 #include <pcap.h>
-#include "Packet.h"
 #include <string>
 
+#include "Packet.h"
+#include "Analyzers.h"
 
 class Net_sniffer {
 private:
@@ -18,10 +19,10 @@ private:
     bpf_u_int32 net;
 
 public:
-    Net_sniffer();
-    Net_sniffer(const std::string& device, const std::string& protocol, bool mode);
+    explicit Net_sniffer();
+    explicit Net_sniffer(const std::string& device, const std::string& protocol, bool mode);
 
-    void start_sniff();
+    void start_sniff(const Analyzers& analyzers);
     static void got_packet(u_char *args, const pcap_pkthdr *header, const u_char *packet);
 };
 
