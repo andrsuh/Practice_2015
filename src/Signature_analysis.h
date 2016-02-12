@@ -4,9 +4,9 @@
 #include <fstream>
 #include <regex>
 #include <vector>
+
 #include "Packet.h"
-// #include "Session_info.h"
-#include "Session.h"
+#include "Solution_info.h"
 
 
 struct Traffic {
@@ -15,7 +15,7 @@ struct Traffic {
     size_t priority;
     size_t num_pack; // how many packets enough to confirm the belong type
 
-    Traffic(const std::string& signature, const std::string& type, int p, int n):
+    explicit Traffic(const std::string& signature, const std::string& type, int p, int n):
         signature(signature), type(type), priority(p), num_pack(n) {}
 };
 
@@ -46,7 +46,6 @@ public:
     std::vector<Packet>& get_download() { return download; }
 
     int get_last_packet_time() const { return last_packet_time; }
-
 };
 
 
@@ -74,12 +73,13 @@ private:
     void free_session_packets(Session_data& s_data);
 public:
 
-    Signature_analysis(const std::string& config_xml_name, const std::string& mode, const std::string& pcap_file);
+    explicit Signature_analysis(const std::string& config_xml_name,
+        const std::string& mode, const std::string& pcap_file);
+
     ~Signature_analysis();
 
     void print_sessions_list();
     void add_packet(const Packet& pack);
-
 };
 
 #endif // SIGNATURE_ANALISATOR_H

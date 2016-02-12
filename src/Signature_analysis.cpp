@@ -42,7 +42,7 @@ Signature_analysis::Signature_analysis(const std::string& config_xml_name,
         const std::string& mode, const std::string& pcap_file
     ): pcap_fname(pcap_file) {
 
-    if (mode == "debug") { // fuu
+    if (mode == "debug") { // debug = (mode == "debug")
         debug = true;
     }
     load_configurations(config_xml_name);
@@ -60,8 +60,8 @@ void Signature_analysis::load_configurations(const string& config_file_name) {
     config->get_attribute_str("host_ip", host); // to get host address
     inet_aton(host.c_str(), &ip);
     host_ip = ip.s_addr;
-    config->get_attribute_int("session_lifetime", &sessions_lifetime);
-    config->get_attribute_int("time_to_check", &time_to_check);
+    config->get_attribute("session_lifetime", sessions_lifetime);
+    config->get_attribute("time_to_check", time_to_check);
 
     load_signatures_list(f_name);
 }
@@ -75,15 +75,12 @@ void Signature_analysis::load_signatures_list(const string& f_name) {
         int priority, num_pack;
         config->get_attribute_str("sign", sign);
         config->get_attribute_str("type", type);
-        config->get_attribute_int("priority", &priority);
-        config->get_attribute_int("num_pack", &num_pack);
+        config->get_attribute("priority", priority);
+        config->get_attribute("num_pack", num_pack);
         Traffic traffic(sign, type, priority, num_pack);
         sign_type_list.push_back(traffic);
     }
     while (config->next_tag());
-    // for (auto iter: sign_type_list) {
-    //     cout << iter.type << endl;
-    // }
 }
 
 
@@ -128,13 +125,10 @@ void Signature_analysis::add_packet(const Packet& pack) {
         if (debug) {
             dbg_out.open("sig_results.txt", ios::app);
             dbg_out << sessions_list[session].get_session_solution() << endl;
-            //dbg_out.close();
         }
         else {
-            // Session_info* s_inf = Session_info::get_session_info();
-            // s_inf->set_sign_solution(session, sessions_list[session].get_session_solution());
-            //s_inf->set_stat_solution(session, "none");
-            cout << sessions_list[session].get_session_solution() << endl;
+            Solution_info * s_inf = Solution_info::get_session_info();
+            s_inf->set_sign_solution(session, sessions_list[session].get_session_solution());
         }
     }
 
@@ -159,11 +153,10 @@ void Signature_analysis::checking_for_signatures(
 void Signature_analysis::start_sessions_kill() {
     for (auto iter: sessions_list) {
         if (!is_alive(iter.second)) {
-            // Session_info* s_inf = Session_info::get_session_info();
-            // if (!debug) {
-            //     s_inf->set_sign_solution(iter->first, "none");
-            // }
-            // free_session_packets(iter->second);
+            Solution_info * s_inf = Solution_info::get_session_info();
+            if (!debug) {
+                s_inf->set_sign_solution(iter.first, "none");
+            }
             sessions_list.erase(iter.first);
         }
     }
@@ -183,7 +176,7 @@ void Signature_analysis::print_sessions_list() {
         Session_data s_date = iter.second;
 
         if (!s_date.has_solution()) {
-            session.print_session();
+            // session.print_session();
 
             vector<Packet> upload = s_date.get_upload();
             vector<Packet> download = s_date.get_download();
@@ -198,5 +191,4 @@ void Signature_analysis::print_sessions_list() {
             s_out << endl << "/********************************/" << endl;
         }
     }
-    // out.close();
 }
