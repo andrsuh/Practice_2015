@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Config* Config::config = 0;
+Config * Config::config = nullptr;
 
 bool Config::load_xml_file(const string &f_name) {
     file_name = f_name;
@@ -18,10 +18,11 @@ bool Config::load_xml_file(const string &f_name) {
     return true;
 }
 
+// i dont understand why it works
 bool Config::next_tag() {
-    if (current_element->NextSiblingElement() == NULL) {
+    if (current_element->NextSiblingElement() == nullptr) {
         current_element = current_element->Parent()->NextSiblingElement();
-        while (current_element != NULL) {
+        while (current_element != nullptr) {
             if (!current_element->NoChildren()) {
                 current_element = current_element->FirstChildElement();
                 return true;
@@ -37,11 +38,11 @@ bool Config::next_tag() {
 
 bool Config::get_tag(const std::string& name) {
     current_element = document.RootElement();
-    while (current_element != NULL) {
+    while (current_element != nullptr) {
         if (!current_element->NoChildren()) {
             current_element = current_element->FirstChildElement();
         }
-        while (current_element != NULL) {
+        while (current_element != nullptr) {
             if (strcmp(current_element->Value(), name.c_str()) == 0) {
                 return true;
             }
@@ -52,9 +53,9 @@ bool Config::get_tag(const std::string& name) {
     return false;
 }
 
-bool Config::get_attribute_str(const string& name, string& value) {//, TiXmlElement* element) {
-    TiXmlAttribute *attr = current_element->FirstAttribute();
-    while (attr != NULL) {
+bool Config::get_attribute_str(const string& name, string& value) {
+    TiXmlAttribute * attr = current_element->FirstAttribute();
+    while (attr != nullptr) {
         if (strcmp(attr->Name(), name.c_str()) == 0) {
             value = attr->Value();
             return true;
@@ -65,48 +66,22 @@ bool Config::get_attribute_str(const string& name, string& value) {//, TiXmlElem
 }
 
 
-bool Config::get_attribute_int(const std::string& name, int *value) {
-    TiXmlAttribute *attr = current_element->FirstAttribute();
-    while (attr != NULL) {
-        if (strcmp(attr->Name(), name.c_str()) == 0) {
-            if (attr->QueryIntValue(value) == TIXML_SUCCESS) {
-                return true;
-            }
-        }
-        attr = attr->Next();
-    }
-    return false;
-}
-
-bool Config::get_attribute_double(const std::string& name, double *value) {
-    TiXmlAttribute *attr = current_element->FirstAttribute();
-    while (attr != NULL) {
-        if (strcmp(attr->Name(), name.c_str()) == 0) {
-            if (attr->QueryDoubleValue(value) == TIXML_SUCCESS) {
-                return true;
-            }
-        }
-        attr = attr->Next();
-    }
-    return false;
-}
-
-void Config::write_stat_to_xml(const string& traffic_type, const string& pcap_filename,
-                                                 const vector<double>& data) {
+void Config::write_stat_to_xml(const string& traffic_type,
+    const string& pcap_filename, const vector<double>& data) {
 
     TiXmlElement *root = document.RootElement(); //pointer to root element
-    TiXmlElement * element = new TiXmlElement( "s" );
+    TiXmlElement * element = new TiXmlElement("s");
     element->SetAttribute("type", traffic_type.c_str());
     element->SetAttribute("file_name", pcap_filename.c_str());
     element->SetDoubleAttribute("none", (double )data[0]);
     element->SetDoubleAttribute("upload", (double)data[1]);
     element->SetDoubleAttribute("download", (double )data[2]);
     element->SetDoubleAttribute("interactive", (double) data[3]);
-    for (int i = 0; i < data.size(); i++) {
+    for (size_t i = 0; i < data.size(); ++i) {
         cout << data[i] << " ";
     }
     cout << endl;
+
     root->InsertEndChild( *element);
     document.SaveFile(file_name.c_str());
-
 }
