@@ -1,6 +1,6 @@
 #ifndef SESSION_H
 #define SESSION_H
-//#include <pcap.h>
+
 #include <string>
 #include <netinet/in.h>
 #include "Packet.h"
@@ -16,13 +16,13 @@ struct Session {
     int time_to_live;
     int last_packet_time; // the arrival time of the last packet
 
-    Session();
-    Session(const Packet& p);
+    explicit Session();
+    explicit Session(const Packet& p);
 
     bool is_alive() const;
     void print_session() const; // opeartor<<??
     bool operator<(const Session& b) const;
-    void session_reverse(); // swap(ip_src, ip_dst) & swap(port_src, port_dst)
+    void session_reverse();
 };
 
 #endif // SESSION_H

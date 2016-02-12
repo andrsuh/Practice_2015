@@ -1,16 +1,12 @@
-#include "Session.h"
-// #include "Packet.h"
-// #include <sys/socket.h>
-// #include <netinet/in.h>
 #include <utility>
 #include <arpa/inet.h>
-
 #include <iostream>
+
+#include "Session.h"
 
 using namespace std;
 
-Session::Session() {
-}
+Session::Session() {}
 
 Session::Session(const Packet& p){
     sniff_ip ip = p.get_ip();
@@ -54,14 +50,6 @@ void Session::print_session() const {
 }
 
 void Session::session_reverse() {
-    // in_addr tmp_ip; // using std::swap
-    // u_short tmp_port;
-    // tmp_ip = ip_src;
-    // ip_src = ip_dst;
-    // ip_dst = tmp_ip;
-    // tmp_port = port_src;
-    // port_src = port_dst;
-    // port_dst = tmp_port;
     swap(ip_src, ip_dst);
     swap(port_src, port_dst);
 }
