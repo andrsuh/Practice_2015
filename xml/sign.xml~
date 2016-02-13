@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<signatures_list>
+	<signature sign="HTTP/1.1" type="BROWSING" priority="0" num_pack="3"/>
+
+	<signature sign="Content-Type: text" type="TEXT" priority="0" num_pack="3"/>
+
+	<signature sign="Content-Type: application" type="SCRIPT" priority="1" num_pack="3"/>
+
+	<signature sign="Content-Type: video" type="VIDEO" priority="2" num_pack="1"/>
+	
+	<signature sign="^.F..-........./x02 ./x02 ..........@......." type="SKYPE" priority="2" num_pack="3"/>
+	<signature sign="^.F.-./x02 ./x02 .@." type="SKYPE" priority="2" num_pack="3"/>
+
+	<signature sign="Content-Type: image" type="IMAGE" priority="2" num_pack="2"/>
+
+	<signature sign="^220[\x09-\x0d -~]*ftp" type="FTP" priority="2" num_pack="1"/>
+
+	<signature sign="^220[\x09-\x0d -~]* (e?smtp|simple mail)" type="SMTP" priority="2" num_pack="1" />
+	<signature sign="userspace flags=REG_NOSUB REG_EXTENDED" type="SMTP" priority="2" num_pack="1" />
+	<signature sign="^220[\x09-\x0d -~]* (e?smtp|simple mail)" type="SMTP" priority="2" num_pack="1" />
+
+	<signature sign="^(\+ok|-err)" type="POP3" priority="2" num_pack="1" />
+	<signature sign="^(\+ok .*pop)" type="POP3" priority="2" num_pack="1" />
+	<signature sign="^(\+ok [\x09-\x0d -~]*(ready|hello|pop|starting)|-err [\x09-\x0d -~]*(invalid|unknown|unimplemented|unrecognized|command))" type="POP3" priority="2" num_pack="1" />
+	<signature sign="\+ok [0-9]+ [0-9]+" type="POP3" priority="2" num_pack="1" />
+
+	<signature sign="^.?.?.?.?[\x01\x02].?.?.?.?.?.?[\x01-?][a-z0-9][\x01-?a-z]*[\x02-\x06][a-z][a-z][fglmoprstuvz]?[aeop]?(um)?[\x01-\x10\x1c][\x01\x03\x04\xFF]" type="DNS" priority="2" num_pack="1" />
+	<signature sign="^.?.?.?.?[\x01\x02].?.?.?.?.?.?[\x01-?][a-z0-9][\x01-?a-z]*[\x02-\x06][a-z][a-z][a-z]?[a-z]?[a-z]?[a-z]?[\x01-\x10][\x01\x03\x04\xFF]" type="DNS" priority="2" num_pack="1" />
+	<signature sign="the [a-z][a-z][a-z]?[a-z]?[a-z]?[a-z]?" type="DNS" priority="2" num_pack="1" />
+	
+</signatures_list>
